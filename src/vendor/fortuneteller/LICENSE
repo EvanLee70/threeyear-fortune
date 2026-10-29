@@ -1,0 +1,56 @@
+fortuneteller (vendored snapshot)
+
+Source:   https://github.com/hjsh200219/fortuneteller  (npm: @hoshin/saju-mcp-server)
+Author:   Hoshin
+License:  MIT (declared in the upstream package.json and README.md; the upstream
+          repository root has no LICENSE file, checked 2026-10-29)
+Snapshot: upstream commit 844d9f6 (HEAD, committed 2026-09-23), re-synced 2026-10-29.
+          Previous snapshot: imported 2026-07-16 (commit ded45ef), identical to
+          upstream 1a930ad (the last commit before the 2026-09-23 fixes).
+          The re-sync is a 3-way merge (base 1a930ad, ours, theirs 844d9f6).
+Local additions: lib/family_compatibility.ts, lib/wuxing_relation.ts
+Local edits kept on top of upstream:
+  - data/wuxing.ts, data/heavenly_stems.ts, data/modern_careers.ts: own trimmed rewrites
+    (upstream versions not used); data/wuxing.ts gained 4 helper functions the new lib needs
+    and data/heavenly_stems.ts now exports HEAVENLY_STEMS.
+  - lib/compatibility.ts: imports analyzeWuXingRelation from ./wuxing_relation.js and exports the
+    day-pillar, element-harmony and ten-gods helpers (used by lib/family_compatibility.ts).
+  - lib/family_compatibility.ts: carries a verbatim copy of analyzeBranchRelation, which upstream removed.
+  - data/longitude_table.ts: added the pseudo-city "오프셋:<minutes>" (an exact clock offset instead of a city). The 3-year
+    fortune passes it so its pillars match the pillar table (upstream default is Seoul, -32.09 min).
+  - lib/career_recommendation.ts: per-category job list fix.
+  - lib/index.ts: interpretation_settings is not exported (Node only).
+  - lib/jijanggan_precise.ts: uses data/solar_terms.js instead of unified_data_query.js.
+  - Superseded by upstream 844d9f6 (the earlier local rewrites were dropped, because the new lib needs their exports and
+    the fixes live in them): data/earthly_branches.ts, data/jijanggan_strength_table.ts, data/longitude_table.ts,
+    data/lunar_table.ts (+ lunar_table_1900_2200.ts), data/solar_terms.ts (+ solar_terms_1900_2200.ts).
+    The lunar-javascript based calendar and solar-term code is gone from the vendor directory.
+  - Not vendored: lib/api_cache.ts, lib/error_handler.ts, lib/interpretation_settings.ts,
+    data/manselyeok_table.ts, data/school_presets.ts, data/daeun_reference_table.ts.
+  - Tests in data/*.test.ts and lib/family_compatibility.test.ts are local.
+
+Do NOT mix in code from VinylStage/saju-mcp-dashboards: its new contributions are
+CC BY-NC 4.0 (non-commercial).
+
+--------------------------------------------------------------------------------
+MIT License
+
+Copyright (c) Hoshin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

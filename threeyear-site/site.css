@@ -1,0 +1,45 @@
+/* 단독 사이트 스타일 — 50대 이상 독자용: 본문 16px 이상, 진한 대비. 다크 모드 없음(라이트 고정). */
+@import "tailwindcss" source(none);
+@source "../src/components/saju/PillarTable.tsx";
+@source "../src/utils/format.ts";
+@source ".";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* 앱 기본(15px)보다 크게: 작은 글자(xs·sm)도 본문과 같은 16px */
+  --text-xs: 1rem;
+  --text-xs--line-height: 1.6;
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.6;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.7;
+  /* 흰 글자 배지·연한 회색 글자의 대비를 WCAG AA(4.5:1) 이상으로 끌어올린다 */
+  --color-gray-400: #4b5563;
+  --color-gray-500: #4b5563;
+  --color-gray-600: #374151;
+  --color-emerald-500: #047857;
+  --color-amber-500: #b45309;
+  --color-rose-500: #be123c;
+  --color-teal-600: #0f766e;
+}
+
+body {
+  margin: 0;
+  background: #faf8f2;
+  color: #1d1d1f;
+  font-family: 'Noto Sans KR', system-ui, -apple-system, 'Malgun Gothic', sans-serif;
+}
+
+/* 사주 표(PillarTable)용 오행 색 — src/index.css 의 같은 이름 규칙을 대비를 높여 다시 정의한다(본 앱과 독립). */
+.font-hanja { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
+.el-tree { color: #15803d; }
+.el-fire { color: #b91c1c; }
+.el-earth { color: #92400e; }
+.el-metal { color: #4b5563; }
+.el-water { color: #111827; }
+.bg-el-solid-tree  { background-color: #15803d; color: #fff; }
+.bg-el-solid-fire  { background-color: #b91c1c; color: #fff; }
+.bg-el-solid-earth { background-color: #eab308; color: #1a1a1a; }
+.bg-el-solid-metal { background-color: #fff; color: #000; box-shadow: inset 0 0 0 1px #6b7280; }
+.bg-el-solid-water { background-color: #1a1a1a; color: #fff; }
