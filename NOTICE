@@ -1,0 +1,19 @@
+threeyear-fortune
+Copyright (c) 2026 Evan Lee. Licensed under the MIT License (see LICENSE).
+
+This product includes material licensed under other permissive licenses:
+
+1. Apache License 2.0 (full text in LICENSES/Apache-2.0.txt)
+   - nanamix/korean-fortune-system (Apache-2.0): the Tojeongbigyeol (토정비결)
+     calculation formula and the Korean text of the 64 hexagrams were adapted
+     from it. Changes: ported from Java and SQL data to TypeScript; time-zone and
+     pillar inputs rewired to this project's engine; one missing hexagram
+     (18, 산풍고) was written in-house.
+
+2. MIT License
+   - src/vendor/fortuneteller: hjsh200219/fortuneteller (Hoshin), see its LICENSE.
+   - src/vendor/ziwei-nihai: Zi Wei Dou Shu school data and algorithm helpers, see its LICENSE.
+   - iztro, lunar-javascript, astronomy-engine, date-fns, date-fns-tz, React.
+
+3. CC0-1.0
+   - @photostructure/tz-lookup.

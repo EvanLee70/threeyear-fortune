@@ -5,7 +5,7 @@ import { bandHex, clamp } from './scale.ts'
 
 export function Chip({ children, tone = 'gray' }: { children: ReactNode; tone?: 'gray' | 'rose' | 'indigo' | 'teal' }) {
   const t = { gray: 'bg-gray-100 text-gray-900 border-gray-500', rose: 'bg-rose-50 text-rose-900 border-rose-700', indigo: 'bg-indigo-50 text-indigo-900 border-indigo-700', teal: 'bg-teal-50 text-teal-900 border-teal-700' }[tone]
-  return <span className={`inline-block rounded-md border px-1.5 py-0.5 text-[13px] font-medium leading-snug ${t}`}>{children}</span>
+  return <span className={`inline-block rounded-md border px-1.5 py-0.5 text-sm font-medium leading-snug ${t}`}>{children}</span>
 }
 
 /** 반원 게이지 + 점수 + 구간 이름 */
@@ -32,7 +32,7 @@ export function HBar({ label, value, labelWidth = 'w-8' }: { label?: ReactNode; 
       <div className="h-3 min-w-0 flex-1 rounded-full bg-gray-300" role="img" aria-label={`${v}점`}>
         <div className="h-full rounded-full" style={{ width: `${Math.max(v, 3)}%`, background: bandHex(v) }} />
       </div>
-      <span className="w-6 shrink-0 text-right text-[13px] font-bold text-gray-900">{v}</span>
+      <span className="w-8 shrink-0 text-right text-[13px] font-bold text-gray-900">{v}</span>
     </div>
   )
 }

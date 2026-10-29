@@ -1,5 +1,6 @@
 // 3개년운세 공용 계산 헬퍼 — 화면(ThreeYearView)과 스냅샷 리포트가 함께 사용한다.
 // 전부 결정론(난수 없음, 시드 고정).
+import { josa } from '../utils/josa.ts'
 
 // ---- 십신(十神): 일간 vs 대상 천간 ----
 const STEM_INFO: Record<string, { el: string; yang: boolean }> = {
@@ -11,6 +12,7 @@ const STEM_INFO: Record<string, { el: string; yang: boolean }> = {
 }
 const GENERATES: Record<string, string> = { 목: '화', 화: '토', 토: '금', 금: '수', 수: '목' }
 const CONTROLS: Record<string, string> = { 목: '토', 토: '수', 수: '화', 화: '금', 금: '목' }
+
 
 export function tenGodOf(dayStem: string, targetStem: string): string {
   const d = STEM_INFO[dayStem], t = STEM_INFO[targetStem]
@@ -154,7 +156,7 @@ export function animalYearLine(birthBranch: string, yearBranch: string, targetYe
 export function overallNarrative(ctx: YearCtx): string {
   const s: string[] = []
   const strengthKr = STRENGTH_KR[ctx.strengthLevel] ?? '중화'
-  s.push(`${ctx.targetYear}년은 ${ctx.yearStem}${ctx.yearBranch}년으로, ${ctx.name}님의 일간 ${ctx.dayStem}(${STRENGTH_LABEL(ctx.dayStem)})에게 ${ctx.tenGod}이 들어오는 해입니다.`)
+  s.push(`${ctx.targetYear}년은 ${ctx.yearStem}${ctx.yearBranch}년으로, ${ctx.name}님의 일간 ${ctx.dayStem}(${STRENGTH_LABEL(ctx.dayStem)})에게 ${ctx.tenGod}${josa(ctx.tenGod, '이', '가')} 들어오는 해입니다.`)
   s.push(TEN_GOD_THEME[ctx.tenGod] ?? '')
   s.push(animalYearLine(ctx.birthBranch, ctx.yearBranch, ctx.targetYear))
   if (ctx.yongPrimary) {
@@ -202,10 +204,10 @@ export function themeNarrative(ctx: YearCtx, field: 'wealth' | 'career' | 'relat
   const band = scoreBandLabel(avg)
   const s: string[] = []
   s.push(avg >= 60
-    ? `${ctx.targetYear}년 ${ctx.name}님의 ${label}은 연평균 ${avg}점으로 ${band}의 흐름입니다.`
+    ? `${ctx.targetYear}년 ${ctx.name}님의 ${label}${josa(label, '은', '는')} 연평균 ${avg}점으로 ${band}의 흐름입니다.`
     : avg >= 45
-      ? `${ctx.targetYear}년 ${ctx.name}님의 ${label}은 연평균 ${avg}점의 ${band} 흐름 — 크게 밀어붙이기보다 때를 고르는 해입니다.`
-      : `${ctx.targetYear}년 ${ctx.name}님의 ${label}은 연평균 ${avg}점으로 수비가 우선입니다. 잃지 않는 것이 버는 것입니다.`)
+      ? `${ctx.targetYear}년 ${ctx.name}님의 ${label}${josa(label, '은', '는')} 연평균 ${avg}점의 ${band} 흐름 — 크게 밀어붙이기보다 때를 고르는 해입니다.`
+      : `${ctx.targetYear}년 ${ctx.name}님의 ${label}${josa(label, '은', '는')} 연평균 ${avg}점으로 수비가 우선입니다. 잃지 않는 것이 버는 것입니다.`)
   const hint = THEME_TEN_GOD_HINT[ctx.tenGod]?.[field]
   if (hint) s.push(hint)
   s.push(`달의 흐름으로는 ${peak.month}월(${peak.monthPillar}, ${Math.round(peak.fortune[field])}점)에 기회가 가장 크게 열리고, ${trough.month}월(${trough.monthPillar}, ${Math.round(trough.fortune[field])}점)에는 속도를 늦추는 것이 좋습니다.`)
@@ -225,6 +227,6 @@ export function cautionNarrative(ctx: YearCtx): { intro: string | null; donts: s
   const intro = ctx.samjae
     ? `${ctx.targetYear}년은 ${ctx.name}님의 ${ctx.samjae}에 해당합니다. 삼재라 하여 모든 일이 막히는 것은 아니나, 큰 계약·이사·확장 같은 되돌리기 어려운 결정은 길한 달을 골라 진행하고 문서와 안전을 이중으로 확인하는 지혜가 필요합니다.`
     : null
-  const worstLine = `${worst.month}월(${worst.monthPillar})은 한 해 중 기운이 가장 낮은 달입니다. ${worst.characteristics.cautions[0] ?? '무리한 확장'}을 조심하고, 이 달의 큰 결정은 앞뒤 달로 옮기는 것이 좋습니다.`
+  const worstLine = `${worst.month}월(${worst.monthPillar})은 한 해 중 기운이 가장 낮은 달입니다. 이 달의 주의: ${worst.characteristics.cautions[0] ?? '무리한 확장'}. 큰 결정은 앞뒤 달로 옮기는 것이 좋습니다.`
   return { intro, donts, worstLine }
 }

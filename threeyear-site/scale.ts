@@ -1,5 +1,4 @@
 // 차트 공용 계산 (컴포넌트 파일에서 분리 — 순수 함수)
-import type { YearResult } from '../src/threeyear/compute.ts'
 
 /** 점수 구간 색 (흰 글자 기준 대비 4.5:1 이상) */
 export function bandHex(v: number): string {
@@ -11,12 +10,13 @@ export function bandHex(v: number): string {
 
 export const clamp = (v: number) => Math.max(0, Math.min(100, v))
 
-/** 월운에서 최고·최저 달을 고른다 (동점이면 앞선 달) */
-export function bestWorst(months: YearResult['months']) {
+/** 월별 점수에서 최고·최저 달을 고른다 (동점이면 앞선 달). 빈 배열이면 null */
+export function bestWorst(months: { month: number; score: number }[]) {
+  if (!months.length) return null
   let best = months[0], worst = months[0]
   for (const m of months) {
-    if (m.fortune.score > best.fortune.score) best = m
-    if (m.fortune.score < worst.fortune.score) worst = m
+    if (m.score > best.score) best = m
+    if (m.score < worst.score) worst = m
   }
   return { best, worst }
 }
