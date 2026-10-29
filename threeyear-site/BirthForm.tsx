@@ -1,7 +1,7 @@
 // 출생 정보 입력 폼. 값은 메모리(React state)에만 둔다. 저장·전송 없음.
-import { useState, type FormEvent, type ReactNode } from 'react'
+import { useState, type FormEvent, type KeyboardEvent, type ReactNode } from 'react'
 import { KOREAN_CITIES, WORLD_CITIES, formatCityName } from '../src/engine/cities.ts'
-import { resolveBirth, type BirthFormState, type Resolved } from './birth.ts'
+import { isAccidentalSubmitKey, resolveBirth, type BirthFormState, type Resolved } from './birth.ts'
 
 const CITIES = [...KOREAN_CITIES, ...WORLD_CITIES]
 const thisYear = new Date().getFullYear()
@@ -44,8 +44,13 @@ export default function BirthForm({ onResolved, onInvalid }: Props) {
     onResolved(r)
   }
 
+  // Only the button submits: Enter on a radio, checkbox, or select must not open the result.
+  const guardEnter = (e: KeyboardEvent<HTMLFormElement>) => {
+    if (isAccidentalSubmitKey(e.key, (e.target as HTMLElement).tagName)) e.preventDefault()
+  }
+
   return (
-    <form onSubmit={submit} className="space-y-4 rounded-lg border-2 border-teal-700 bg-white p-4" aria-label="출생 정보 입력">
+    <form onSubmit={submit} onKeyDown={guardEnter} className="space-y-4 rounded-lg border-2 border-teal-700 bg-white p-4" aria-label="출생 정보 입력">
       <fieldset className="flex flex-wrap items-center gap-x-6 gap-y-2">
         <legend className={label}>달력</legend>
         {([['solar', '양력'], ['lunar', '음력']] as const).map(([v, text]) => (

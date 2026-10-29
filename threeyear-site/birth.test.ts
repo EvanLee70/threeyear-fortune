@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { KOREAN_CITIES } from '../src/engine/cities.ts'
-import { formatHeader, resolveBirth, type BirthFormState } from './birth.ts'
+import { formatHeader, isAccidentalSubmitKey, resolveBirth, type BirthFormState } from './birth.ts'
 
 const base: BirthFormState = { calendar: 'solar', leap: false, year: 1985, month: 3, day: 14, hour: 9, minute: 30, unknownTime: false, gender: 'M', city: 0 }
 const seoul = KOREAN_CITIES[0]
@@ -32,5 +32,17 @@ describe('resolveBirth', () => {
     expect(resolveBirth({ ...base, calendar: 'lunar', leap: true, year: 1985 }, seoul).ok).toBe(false)
     expect(resolveBirth({ ...base, calendar: 'lunar', month: 2, day: 31 }, seoul).ok).toBe(false)
     expect(resolveBirth({ ...base, month: 2, day: 30 }, seoul).ok).toBe(false)
+  })
+})
+
+describe('isAccidentalSubmitKey', () => {
+  it('blocks Enter everywhere except on the submit button', () => {
+    for (const tag of ['INPUT', 'SELECT', 'LABEL', 'FIELDSET', 'FORM']) expect(isAccidentalSubmitKey('Enter', tag), tag).toBe(true)
+    expect(isAccidentalSubmitKey('Enter', 'BUTTON')).toBe(false)
+    expect(isAccidentalSubmitKey('Enter', 'button')).toBe(false)
+  })
+
+  it('never blocks other keys such as Space, Tab, and arrows', () => {
+    for (const key of [' ', 'Tab', 'ArrowDown', 'a', '']) expect(isAccidentalSubmitKey(key, 'INPUT'), key).toBe(false)
   })
 })

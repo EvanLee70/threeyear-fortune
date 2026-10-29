@@ -66,3 +66,11 @@ export function resolveBirth(f: BirthFormState, city: City | undefined): Resolve
     meta: { calendar: f.calendar, solar, lunar: l.value, hour, minute, unknownTime: f.unknownTime, gender: f.gender, cityLabel: formatCityName(city) },
   }
 }
+
+/**
+ * Enter inside a field submits a form by itself (browsers do this for radios, checkboxes, and text fields).
+ * Only the 운세 보기 button may open the result, so Enter anywhere else is blocked.
+ */
+export function isAccidentalSubmitKey(key: string, tagName: string): boolean {
+  return key === 'Enter' && tagName.toUpperCase() !== 'BUTTON'
+}
