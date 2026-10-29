@@ -31,15 +31,15 @@ body {
   font-family: 'Noto Sans KR', system-ui, -apple-system, 'Malgun Gothic', sans-serif;
 }
 
-/* 사주 표(PillarTable)용 오행 색 — src/index.css 의 같은 이름 규칙을 대비를 높여 다시 정의한다(본 앱과 독립). */
+/* Five-element colors for the pillar table. Every pair has a contrast ratio of at least 4.5:1. */
 .font-hanja { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
-.el-tree { color: #15803d; }
-.el-fire { color: #b91c1c; }
-.el-earth { color: #92400e; }
-.el-metal { color: #4b5563; }
-.el-water { color: #111827; }
-.bg-el-solid-tree  { background-color: #15803d; color: #fff; }
-.bg-el-solid-fire  { background-color: #b91c1c; color: #fff; }
-.bg-el-solid-earth { background-color: #eab308; color: #1a1a1a; }
-.bg-el-solid-metal { background-color: #fff; color: #000; box-shadow: inset 0 0 0 1px #6b7280; }
-.bg-el-solid-water { background-color: #1a1a1a; color: #fff; }
+.wx-text-tree  { color: #0f6b3a; }
+.wx-text-fire  { color: #b3261e; }
+.wx-text-earth { color: #7a4a00; }
+.wx-text-metal { color: #3d4852; }
+.wx-text-water { color: #0b2a4a; }
+.wx-fill-tree  { background: #0f6b3a; color: #ffffff; }
+.wx-fill-fire  { background: #b3261e; color: #ffffff; }
+.wx-fill-earth { background: #f2c200; color: #1f1500; }
+.wx-fill-metal { background: #f4f4f5; color: #111111; box-shadow: inset 0 0 0 2px #3d4852; }
+.wx-fill-water { background: #12233a; color: #ffffff; }

@@ -17,12 +17,12 @@ const head = 'border border-gray-400 bg-gray-100 px-1 py-2 text-center text-base
 /** Big stem/branch cell on a solid element colour. */
 function Glyph({ ch }: { ch: string }) {
   const el = ELEMENT[ch]
-  return <span className={`block py-1 text-2xl font-bold ${el ? `bg-el-solid-${el}` : ''}`}>{ch}</span>
+  return <span className={`block py-1 text-2xl font-bold ${el ? `wx-fill-${el}` : ''}`}>{ch}</span>
 }
 
 /** Hidden stems: each character in its element colour. */
 function Hidden({ text }: { text: string }) {
-  return <>{[...text].map((ch, i) => <span key={i} className={`font-bold el-${ELEMENT[ch] ?? ''}`}>{ch}</span>)}</>
+  return <>{[...text].map((ch, i) => <span key={i} className={`font-bold wx-text-${ELEMENT[ch] ?? ''}`}>{ch}</span>)}</>
 }
 
 export default function PillarTable({ data, unknownTime }: { data: PillarTableData; unknownTime: boolean }) {

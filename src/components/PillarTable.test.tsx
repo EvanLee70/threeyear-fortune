@@ -22,9 +22,9 @@ describe('PillarTable', () => {
   })
 
   it('colours stems by element and marks gongmang only on listed pillars', () => {
-    expect(html).toContain('bg-el-solid-tree')  // 乙
-    expect(html).toContain('bg-el-solid-water') // 壬
-    expect(html).toContain('bg-el-solid-fire')  // 丁
+    expect(html).toContain('wx-fill-tree')  // 乙
+    expect(html).toContain('wx-fill-water') // 壬
+    expect(html).toContain('wx-fill-fire')  // 丁
     expect(html).toContain('戌 亥')
     expect(html.match(/>空</g)).toHaveLength(1)
     expect(html).toContain('帝旺')
