@@ -5,6 +5,7 @@ import { calculatePillarTable } from '../src/engine/pillars.ts'
 import App from './App.tsx'
 import BirthForm from './BirthForm.tsx'
 import ResultView, { type Result } from './ResultView.tsx'
+import ResultPage from './ResultPage.tsx'
 import { SOURCE_REPO_URL } from './config.ts'
 import { resolveBirth } from './birth.ts'
 import { makeBundles, makeSystemYear } from './__fixtures__/bundle.ts'
@@ -37,6 +38,11 @@ describe('threeyear-site App', () => {
     expect(html).not.toContain('data-section=')
     expect(html).not.toContain('graph-')
     expect(html).not.toContain('이름 미지정')
+  })
+
+  it('입력 화면에는 운세 해설이 없고, 새 탭에서 열린다고 안내한다', () => {
+    expect(html).toContain('새 탭')
+    for (const t of ['data-section=', 'data-testid="birth-card"', 'explain-', 'graph-', '조심할 점', '자미두수(紫微斗數)']) expect(html, t).not.toContain(t)
   })
 
   it('푸터에 소스 저장소 링크가 있다', () => {
@@ -160,7 +166,7 @@ describe('결과 화면', () => {
 
   it('결과를 감싸는 max-w-3xl 컨테이너가 없고 좌우 여백이 최소다', () => {
     expect(render()).not.toContain('max-w-3xl')
-    const full = renderToStaticMarkup(<App initial={result()} />)
+    const full = renderToStaticMarkup(<ResultPage initial={result()} />)
     // walk the tags up to the results section: no still-open element may carry max-w-3xl
     const stack: string[] = []
     for (const m of full.slice(0, full.indexOf('aria-label="운세 결과"')).matchAll(/<(\/?)([a-z0-9]+)([^>]*)>/g)) {
@@ -196,5 +202,23 @@ describe('결과 화면', () => {
     const html = render(false, bundles)
     expect(html).toContain('이 체계는 이번 입력으로 계산하지 못했습니다.')
     expect([...html.matchAll(/data-section="(\w+)"/g)]).toHaveLength(7)
+  })
+})
+
+describe('결과 탭 (ResultPage)', () => {
+  it('기다리는 동안 계산 안내만 보이고 해설은 없다', () => {
+    const page = renderToStaticMarkup(<ResultPage />)
+    expect(page).toContain('운세를 계산하고 있습니다')
+    expect(page).not.toContain('data-section=')
+    expect(page).toContain('소스 코드 보기')
+  })
+
+  it('준비되면 출생 정보 카드가 맨 위, 그 다음 사주 표와 비교가 나온다', () => {
+    const r = resolveBirth({ calendar: 'solar', leap: false, year: 1985, month: 3, day: 14, hour: 9, minute: 30, unknownTime: false, gender: 'M', city: 0 }, KOREAN_CITIES[0])
+    if (!r.ok) throw new Error('resolve')
+    const page = renderToStaticMarkup(<ResultPage initial={{ meta: r.meta, table: calculatePillarTable(r.input), bundles: makeBundles() }} />)
+    expect(page.indexOf('data-testid="birth-card"')).toBeLessThan(page.indexOf('<table'))
+    expect(page.indexOf('<table')).toBeLessThan(page.indexOf('data-testid="compare"'))
+    expect(page).toContain('사시(巳時)')
   })
 })
