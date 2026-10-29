@@ -36,7 +36,7 @@ export default function ResultPage({ initial = null }: { initial?: Result | null
         const bundles = await computeAllYearly(p.input, DISPLAY_NAME)
         if (!alive) return
         if (!bundles) { setState({ status: 'error' }); return }
-        document.title = `${DISPLAY_NAME}님의 3개년 운세`
+        document.title = '3개년 운세'
         setState({ status: 'ready', result: { meta: p.meta, table: calculatePillarTable(p.input), bundles } })
       } catch {
         if (alive) setState({ status: 'error' })

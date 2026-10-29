@@ -5,7 +5,6 @@ import PillarTable from '../src/components/PillarTable.tsx'
 import type { BirthMeta } from './birth.ts'
 import BirthCard from './BirthCard.tsx'
 import Compare from './Compare.tsx'
-import { DISPLAY_NAME } from './config.ts'
 
 export interface Result {
   meta: BirthMeta
@@ -19,7 +18,7 @@ export default function ResultView({ result }: { result: Result }) {
   const { meta, table, bundles } = result
   return (
     <section className="space-y-4" aria-label="운세 결과">
-      <BirthCard meta={meta} name={DISPLAY_NAME} hourBranch={table.pillars[0]?.pillar.branch} />
+      <BirthCard meta={meta} hourBranch={table.pillars[0]?.pillar.branch} />
       <div className={card}>
         <h2 className="mb-2 text-base font-bold text-gray-900">사주팔자(四柱八字)</h2>
         <PillarTable data={table} unknownTime={meta.unknownTime} />

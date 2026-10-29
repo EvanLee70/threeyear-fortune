@@ -72,7 +72,7 @@ describe('결과 화면', () => {
 
   it('헤더 한 줄, 사주 표 행, 비교 영역이 위에서 아래로 나온다', () => {
     const html = render()
-    expect(html).toContain('고길동님 · 양력 1985.03.14 (음력 1985.01.23) · 09:30 · 남 · 서울')
+    expect(html).toContain('>양력 1985.03.14 (음력 1985.01.23) · 09:30 · 남 · 서울<')
     expect(html.indexOf('header-line')).toBeLessThan(html.indexOf('<table'))
     expect(html.indexOf('<table')).toBeLessThan(html.indexOf('data-testid="compare"'))
     for (const row of ['십신', '천간', '지지', '운성', '신살', '장간', '공망']) expect(html).toContain(row)
