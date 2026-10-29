@@ -1,7 +1,7 @@
 // 출생 정보 입력 폼. 값은 메모리(React state)에만 둔다. 저장·전송 없음.
-import { useState, type FormEvent, type KeyboardEvent, type ReactNode } from 'react'
+import { useState, type FormEvent, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react'
 import { KOREAN_CITIES, WORLD_CITIES, formatCityName } from '../src/engine/cities.ts'
-import { isAccidentalSubmitKey, resolveBirth, type BirthFormState, type Resolved } from './birth.ts'
+import { isAccidentalSubmitKey, isRealClick, resolveBirth, type BirthFormState, type Resolved } from './birth.ts'
 
 const CITIES = [...KOREAN_CITIES, ...WORLD_CITIES]
 const thisYear = new Date().getFullYear()
@@ -36,8 +36,11 @@ export default function BirthForm({ onResolved, onInvalid }: Props) {
   const lunar = form.calendar === 'lunar'
   const maxDay = lunar ? 30 : new Date(form.year, form.month, 0).getDate()
 
-  function submit(e: FormEvent) {
-    e.preventDefault()
+  // A native form submission never opens anything. Only a real click on the 운세 보기 button does (see `run`).
+  const ignoreSubmit = (e: FormEvent) => e.preventDefault()
+
+  function run(e: MouseEvent<HTMLButtonElement>) {
+    if (!isRealClick(e.nativeEvent)) return // a click made by a script or an extension is not the user asking
     const r = resolveBirth(form, CITIES[form.city])
     if (!r.ok) { setError(r.error); onInvalid(); return }
     setError(null)
@@ -50,7 +53,7 @@ export default function BirthForm({ onResolved, onInvalid }: Props) {
   }
 
   return (
-    <form onSubmit={submit} onKeyDown={guardEnter} className="space-y-4 rounded-lg border-2 border-teal-700 bg-white p-4" aria-label="출생 정보 입력">
+    <form onSubmit={ignoreSubmit} onKeyDown={guardEnter} className="space-y-4 rounded-lg border-2 border-teal-700 bg-white p-4" aria-label="출생 정보 입력">
       <fieldset className="flex flex-wrap items-center gap-x-6 gap-y-2">
         <legend className={label}>달력</legend>
         {([['solar', '양력'], ['lunar', '음력']] as const).map(([v, text]) => (
@@ -100,7 +103,7 @@ export default function BirthForm({ onResolved, onInvalid }: Props) {
           <optgroup label="해외">{WORLD_CITIES.map((c, i) => <option key={i} value={KOREAN_CITIES.length + i}>{formatCityName(c)}</option>)}</optgroup>
         </Select></div>
 
-      <button type="submit" className="h-12 w-full rounded-lg bg-teal-700 text-lg font-bold text-white hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-600/40">운세 보기</button>
+      <button type="button" onClick={run} className="h-12 w-full rounded-lg bg-teal-700 text-lg font-bold text-white hover:bg-teal-800 focus:outline-none focus:ring-4 focus:ring-teal-600/40">운세 보기</button>
       {error && <p role="alert" className="text-base font-bold text-rose-700">{error}</p>}
       <p className="text-base font-bold text-gray-900">🔒 입력한 정보는 저장되거나 서버로 전송되지 않습니다.</p>
     </form>

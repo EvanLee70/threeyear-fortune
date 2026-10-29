@@ -74,3 +74,8 @@ export function resolveBirth(f: BirthFormState, city: City | undefined): Resolve
 export function isAccidentalSubmitKey(key: string, tagName: string): boolean {
   return key === 'Enter' && tagName.toUpperCase() !== 'BUTTON'
 }
+
+/** Only a click made by the user counts: script-made clicks (element.click(), extensions) have isTrusted = false. */
+export function isRealClick(ev: { isTrusted?: boolean }): boolean {
+  return ev.isTrusted === true
+}

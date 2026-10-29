@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { KOREAN_CITIES } from '../src/engine/cities.ts'
-import { formatHeader, isAccidentalSubmitKey, resolveBirth, type BirthFormState } from './birth.ts'
+import { formatHeader, isAccidentalSubmitKey, isRealClick, resolveBirth, type BirthFormState } from './birth.ts'
 
 const base: BirthFormState = { calendar: 'solar', leap: false, year: 1985, month: 3, day: 14, hour: 9, minute: 30, unknownTime: false, gender: 'M', city: 0 }
 const seoul = KOREAN_CITIES[0]
@@ -44,5 +44,13 @@ describe('isAccidentalSubmitKey', () => {
 
   it('never blocks other keys such as Space, Tab, and arrows', () => {
     for (const key of [' ', 'Tab', 'ArrowDown', 'a', '']) expect(isAccidentalSubmitKey(key, 'INPUT'), key).toBe(false)
+  })
+})
+
+describe('isRealClick', () => {
+  it('accepts only clicks made by the user', () => {
+    expect(isRealClick({ isTrusted: true })).toBe(true)
+    expect(isRealClick({ isTrusted: false })).toBe(false) // element.click() from a script or an extension
+    expect(isRealClick({})).toBe(false)
   })
 })

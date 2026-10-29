@@ -45,6 +45,11 @@ describe('threeyear-site App', () => {
     for (const t of ['data-section=', 'data-testid="birth-card"', 'explain-', 'graph-', '조심할 점', '자미두수(紫微斗數)']) expect(html, t).not.toContain(t)
   })
 
+  it('운세 보기는 제출 버튼이 아니라 일반 버튼이다 (엔터·스크립트 제출로는 아무것도 열리지 않는다)', () => {
+    expect(html).toMatch(/<button type="button"[^>]*>운세 보기<\/button>/)
+    expect(html).not.toContain('type="submit"')
+  })
+
   it('푸터에 소스 저장소 링크가 있다', () => {
     expect(SOURCE_REPO_URL).toMatch(/^https:\/\/github\.com\/[\w-]+\/[\w.-]+$/)
     expect(html).toContain(`href="${SOURCE_REPO_URL}"`)
@@ -220,5 +225,15 @@ describe('결과 탭 (ResultPage)', () => {
     expect(page.indexOf('data-testid="birth-card"')).toBeLessThan(page.indexOf('<table'))
     expect(page.indexOf('<table')).toBeLessThan(page.indexOf('data-testid="compare"'))
     expect(page).toContain('사시(巳時)')
+  })
+
+  it('준비되면 이 탭의 결과를 지우는 버튼이 있고, 기다리는 중에는 없다', () => {
+    const waiting = renderToStaticMarkup(<ResultPage />)
+    expect(waiting).not.toContain('data-testid="clear-result"')
+    const r = resolveBirth({ calendar: 'solar', leap: false, year: 1985, month: 3, day: 14, hour: 9, minute: 30, unknownTime: false, gender: 'M', city: 0 }, KOREAN_CITIES[0])
+    if (!r.ok) throw new Error('resolve')
+    const page = renderToStaticMarkup(<ResultPage initial={{ meta: r.meta, table: calculatePillarTable(r.input), bundles: makeBundles() }} />)
+    expect(page).toContain('이 탭의 결과 지우기')
+    expect(page.indexOf('data-testid="clear-result"')).toBeLessThan(page.indexOf('data-testid="birth-card"'))
   })
 })

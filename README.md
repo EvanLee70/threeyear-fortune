@@ -24,6 +24,7 @@ npm ci
 npm run dev      # local dev server
 npm test         # vitest, includes parity tests against fixtures/oracle.json
 npm run build    # tsc --noEmit && vite build -> dist/
+npm run e2e      # headless Chrome checks of the new-tab flow (run after build; E2E_URL=<site> tests a live site)
 ```
 
 ## Layout
