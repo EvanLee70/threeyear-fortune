@@ -58,7 +58,7 @@ export function hexagramImagery(lines: readonly Line[]): string {
   const { lower, upper } = trigramsOfCast(lines)
   const same = lower.ko === upper.ko
   const shape = same
-    ? `${upper.nature}(${upper.hanja}) 위에 다시 ${lower.nature}${josa(lower.nature, '이', '가')} 겹친 순괘(純卦)로, ${upper.virtue}의 기운이 안팎으로 가득한 모습입니다.`
+    ? `${upper.nature}(${upper.ko}·${upper.hanja}) 위에 다시 ${lower.nature}${josa(lower.nature, '이', '가')} 겹친 순괘(純卦)로, ${upper.virtue}의 기운이 안팎으로 가득한 모습입니다.`
     : `위(바깥)는 ${upper.nature}(${upper.ko}·${upper.hanja}), 아래(안)는 ${lower.nature}(${lower.ko}·${lower.hanja}) — ${upper.nature} 아래 ${lower.nature}${josa(lower.nature, '이', '가')} 자리한 상(象)입니다.`
   return [
     shape,

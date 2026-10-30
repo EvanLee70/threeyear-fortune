@@ -10,7 +10,7 @@ vi.setConfig({ testTimeout: 30000 })
 describe('computeAllYearly', () => {
   it('normal input: three bundles with all five systems and a composite equal to the rounded mean', async () => {
     const { computeAllYearly } = await import('../src/yearly/index.ts')
-    const r = await computeAllYearly(input, '고길동', NOW)
+    const r = await computeAllYearly(input, '우리', NOW)
     expect(r).not.toBeNull()
     expect(r!.map((b) => b.year)).toEqual([2026, 2027, 2028])
     for (const b of r!) {
@@ -32,20 +32,20 @@ describe('computeAllYearly', () => {
 
   it('is deterministic', async () => {
     const { computeAllYearly } = await import('../src/yearly/index.ts')
-    expect(await computeAllYearly(input, '고길동', NOW)).toEqual(await computeAllYearly(input, '고길동', NOW))
+    expect(await computeAllYearly(input, '우리', NOW)).toEqual(await computeAllYearly(input, '우리', NOW))
   })
 
   it('empty and invalid input give null', async () => {
     const { computeAllYearly } = await import('../src/yearly/index.ts')
-    expect(await computeAllYearly({} as BirthInput, '고길동', NOW)).toBeNull()
-    expect(await computeAllYearly({ ...input, month: 13 }, '고길동', NOW)).toBeNull()
+    expect(await computeAllYearly({} as BirthInput, '우리', NOW)).toBeNull()
+    expect(await computeAllYearly({ ...input, month: 13 }, '우리', NOW)).toBeNull()
   })
 
   it('a crashing system is left out and the others still work', async () => {
     vi.resetModules()
     vi.doMock('../src/yearly/astro.ts', () => ({ computeAstroYearly: () => { throw new Error('boom') } }))
     const { computeAllYearly } = await import('../src/yearly/index.ts')
-    const r = await computeAllYearly(input, '고길동', NOW)
+    const r = await computeAllYearly(input, '우리', NOW)
     vi.doUnmock('../src/yearly/astro.ts')
     expect(r![0].systems.astro).toBeUndefined()
     expect(Object.keys(r![0].systems).sort()).toEqual(['juyeok', 'myeongri', 'tojeong', 'ziwei'])
@@ -53,7 +53,7 @@ describe('computeAllYearly', () => {
 
   it('unknown birth time still works', async () => {
     const { computeAllYearly } = await import('../src/yearly/index.ts')
-    const r = await computeAllYearly({ ...input, hour: 12, minute: 0, unknownTime: true }, '고길동', NOW)
+    const r = await computeAllYearly({ ...input, hour: 12, minute: 0, unknownTime: true }, '우리', NOW)
     expect(r).not.toBeNull()
     expect(Object.keys(r![0].systems).length).toBeGreaterThanOrEqual(4)
   })

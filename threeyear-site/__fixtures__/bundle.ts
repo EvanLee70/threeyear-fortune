@@ -18,7 +18,7 @@ export function makeSystemYear(system: SystemKey, year: number, seed: number): S
     base.explain.months = TEXT(`${system} 월별`)
   }
   if (system === 'ziwei') {
-    base.palaces = Array.from({ length: 12 }, (_, i) => ({ name: `${i + 1}번궁`, marks: i % 3 === 0 ? ['化祿', '紫微'] : [], tone: (['good', 'bad', 'neutral'] as const)[i % 3] }))
+    base.palaces = Array.from({ length: 12 }, (_, i) => ({ name: `${i + 1}번궁`, marks: i % 3 === 0 ? ['화록(化祿)', '자미'] : [], tone: (['good', 'bad', 'neutral'] as const)[i % 3] }))
     base.explain.palaces = TEXT('궁 지도')
   }
   if (system === 'astro') {

@@ -18,7 +18,7 @@ export interface BarItem { label: string; score: number }
 export interface PalaceCell {
   /** palace name, e.g. '재백궁' */
   name: string
-  /** short marks to show inside the cell, e.g. ['化祿', '紫微'] */
+  /** short marks to show inside the cell, e.g. ['화록(化祿)', '자미'] */
   marks: string[]
   tone: 'good' | 'bad' | 'neutral'
 }

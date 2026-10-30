@@ -17,7 +17,7 @@ describe('BirthCard', () => {
   it('shows solar and lunar dates, time, gender, and place as pictures', () => {
     const html = card()
     expect(html).toContain('>출생 정보<')
-    expect(html).not.toContain('고길동')
+    expect(html).not.toContain('우리')
     expect(html).toContain('1985.03.14 (목)')
     expect(html).toContain('1985.01.23') // lunar
     expect(days(html)).toEqual(['14', '23'])

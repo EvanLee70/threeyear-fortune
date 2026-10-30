@@ -17,7 +17,7 @@ type Astrolabe = ReturnType<typeof astro.bySolar>
 type Layer = { palaceNames: readonly string[]; mutagen: readonly string[] } // yearly / monthly horoscope layer
 type NatalPalace = Astrolabe['palaces'][number]
 
-const KIND_HANJA = ['化祿', '化權', '化科', '化忌']
+const KIND_HANJA = ['화록(化祿)', '화권(化權)', '화과(化科)', '화기(化忌)']
 const KIND_KO = ['화록(化祿)은', '화권(化權)은', '화과(化科)는', '화기(化忌)는']
 const KEY = ['명궁', '재백', '관록', '천이']
 const W_YEAR = [8, 6, 5, -10]
@@ -161,7 +161,7 @@ function computeOne(a: Astrolabe, input: BirthInput, year: number): SystemYear {
   cautions.push('자미두수는 재미와 참고용입니다. 재물·건강·법적 문제는 전문가와 상의하세요.')
 
   const explain = {
-    palaces: '12칸은 올해의 유년 명궁에서 시작해 형제궁, 부처궁 순서로 이어지는 올해의 궁 배치입니다. 칸 안의 化祿·化權·化科는 올해 천간이 일으키는 도움이 되는 변화이고, 化忌는 마음 쓸 일이 생기기 쉬운 자리입니다. 별 이름은 그 칸의 주성입니다. 표시가 있는 칸이 올해 눈여겨볼 영역입니다.',
+    palaces: '12칸은 올해의 유년 명궁에서 시작해 형제궁, 부처궁 순서로 이어지는 올해의 궁 배치입니다. 칸 안의 화록(化祿)·화권(化權)·화과(化科)는 올해 천간이 일으키는 도움이 되는 변화이고, 화기(化忌)는 마음 쓸 일이 생기기 쉬운 자리입니다. 별 이름은 그 칸의 주성입니다. 표시가 있는 칸이 올해 눈여겨볼 영역입니다.',
     bars: '재물은 재백궁, 직업은 관록궁, 연애는 부처궁, 건강은 질액궁을 읽은 점수입니다. 50점이 보통이고, 화록·화권·화과가 들어오거나 주성이 밝으면 올라가며, 화기가 들어오면 내려갑니다. 건강 점수는 생활 습관을 돌아보는 참고용입니다.',
     months: '1월부터 12월까지 달마다 같은 방식으로 읽은 점수입니다(각 달 15일 기준). 올해 전체 점수의 영향을 조금 받고, 그 달의 사화가 명궁·재백궁·관록궁·천이궁에 닿는지로 오르내립니다. 낮은 달은 서두르지 말고 일정에 여유를 두라는 신호로 보세요.',
   }

@@ -55,7 +55,7 @@ describe('computeZiweiYearly', () => {
   it('output differs between years and uses the transformations', () => {
     const r = computeZiweiYearly(base, [2026, 2027])!
     expect(r[0].headline).not.toBe(r[1].headline)
-    expect(r[0].palaces!.flatMap((p) => p.marks).filter((m) => m === '化祿')).toHaveLength(1)
+    expect(r[0].palaces!.flatMap((p) => p.marks).filter((m) => m === '화록(化祿)')).toHaveLength(1)
   })
 })
 
